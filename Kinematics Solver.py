@@ -1,7 +1,7 @@
 import math
 import re
 import os
-print("September 16")
+
 class kinematics:
 	name = "Kinematics"
 	variables = [
@@ -11,29 +11,29 @@ class kinematics:
 		["t", "Time", "s"],
 		["x", "Displacement", "mm"]
 	]
-	# equations = [
-# 		["f", "v+a*t"],
-# 		["x", "v*t+(a*t^2)/2"],
-# 		["v", "f-a*t"],
-# 		["t", "(f-v)/a"],
-# 		["a", "(f-v)/t"],
-# 		["t", "([2*a*x+v^2]-v)/a"],
-# 		["x", "((f+v)/2)*t"],
-# 		["t", "(2*x)/(f+v)"],
-# 		["f", "(2*x)/t-v"],
-# 		["v", "(2*x)/t-f"],
-# 		["v", "(x-(a*t^2)/2)/t"],
-# 		["a", "(2*x-2*v*t)/t^2"],
-# 		["f", "[v^2+2*a*x]"],
-# 		["v", "[f^2-2*a*x]"],
-# 		["a", "(f^2-v^2)/(2*x)"],
-# 		["x", "(f^2-v^2)/(2*a)"]
-# 	]
 	equations = [
-		["f=v+a*t"],
-		["x=v*t+(1/2)*a*t^2"],
-		["f^2=v^2+2*a*x"]
+		["f", "v+a*t"],
+		["x", "v*t+(a*t^2)/2"],
+		["v", "f-a*t"],
+		["t", "(f-v)/a"],
+		["a", "(f-v)/t"],
+		["t", "([2*a*x+v^2]-v)/a"],
+		["x", "((f+v)/2)*t"],
+		["t", "(2*x)/(f+v)"],
+		["f", "(2*x)/t-v"],
+		["v", "(2*x)/t-f"],
+		["v", "(x-(a*t^2)/2)/t"],
+		["a", "(2*x-2*v*t)/t^2"],
+		["f", "[v^2+2*a*x]"],
+		["v", "[f^2-2*a*x]"],
+		["a", "(f^2-v^2)/(2*x)"],
+		["x", "(f^2-v^2)/(2*a)"]
 	]
+	# equations = [
+	# 	["f=v+a*t"],
+	# 	["x=v*t+(1/2)*a*t^2"],
+	# 	["f^2=v^2+2*a*x"]
+	# ]
 
 conversions = {
 	"mm": ("mm", 1.0),
@@ -114,18 +114,8 @@ def eval (j, q):
 			remainder -= 1
 			variables_found.append(x)
 
-	if remainder == 1:
-		var = [x for x in variables_list if x not in variables_found][0]
-		equals_index = j.find("=")
-		if equals_index != -1:
-			part1 = j[0:equals_index]
-			part2 = j[equals_index+1:]
-
-			val1 = part1 if part1.find(var) == -1 else eval_expression(part1, q)
-			val2 = part2 if part2.find(var) == -1 else eval_expression(part2, q)
-
-
-
+	if remainder == 0:
+		return eval_expression(j, q)
 
 	return False
 
@@ -231,6 +221,7 @@ def eval_expression (equation, variables,sqrt=False):
 	result = "".join(equation)
 	if sqrt:
 		result = "{:.5f}".format(math.sqrt(float("".join(equation))))
+
 	return result
 
 variables = {}
@@ -398,7 +389,8 @@ while progress != 0:
 	progress = 0
 	for i,j in enumerate(eqs):
 		if variables[j[0]] is False:
-			expression = eval(j[1], variables)
+			expression = eval(j[2], variables)
+			print "Solved: ", expression
 			if variables[j[0]] is not False and expression is not False and math.fabs(float(expression.replace("~","-")) - float(variables[j[0]].replace("~","-"))) > 0.2:
 				impossible = True
 				progress = 0
