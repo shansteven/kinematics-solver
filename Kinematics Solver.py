@@ -1,7 +1,7 @@
 import math
 import re
 import os
-
+print("September 16")
 class kinematics:
 	name = "Kinematics"
 	variables = [
