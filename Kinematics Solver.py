@@ -2,6 +2,9 @@ import math
 import re
 import os
 
+# Solves a simple physics kinematics problem
+# List of valid units include mm, m, cm, in, ft, yd, mi, sec, s, min, and hr
+
 class kinematics:
 	name = "Kinematics"
 	variables = [
@@ -45,6 +48,7 @@ conversions = {
 	"mi": ("mm", 1609000.0),
 	"sec": ("s", 1.0),
 	"s": ("s", 1.0),
+	"second": ("s", 1.0),
 	"min": ("s", 60),
 	"hr": ("s", 3600),
 }
@@ -97,11 +101,9 @@ def guess_value (left, right, var, min, max, q, delta, derivative):
 	if typeof(right) == "string":
 		right = eval_expression(right, variables)
 
-
-
-def eval (j, q):
+def eval (_equation, _variables):
 	global variables
-	variables_list = re.findall("[a-z]", j)
+	variables_list = re.findall("[a-z]", _equation)
 	temp = []
 	for x in variables_list:
 		if x not in temp:
@@ -110,12 +112,12 @@ def eval (j, q):
 	remainder = len(variables_list)
 	variables_found = []
 	for x in variables_list:
-		if q[x] is not False:
+		if _variables[x] is not False:
 			remainder -= 1
 			variables_found.append(x)
 
 	if remainder == 0:
-		return eval_expression(j, q)
+		return eval_expression(_equation, _variables)
 
 	return False
 
@@ -228,38 +230,38 @@ variables = {}
 os.system('clear')
 
 separator_line = "#######################"
-print separator_line
-print "#       Options       #"
-print "#######################"
-# print "# 1.) Kinematics      #"
+print(separator_line)
+print("#       Options       #")
+print("#######################")
+# print("# 1.) Kinematics      #"
 for i in range(0, len(map)):
 	map_label = "{:.0f}".format(i+1) + ".) " + map[i].name
 	map_label_len = len(map_label)
 	if map_label_len > len(separator_line) + 4:
 		map_label = map_label[0:(len(separator_line)-4)]
-	print "# " + map_label + "".join([" " for x in range(0, len(separator_line) - 4 - map_label_len)]) + " #"
-print "#######################\n"
+	print("# " + map_label + "".join([" " for x in range(0, len(separator_line) - 4 - map_label_len)]) + " #")
+print("#######################\n")
 
-input = raw_input("Option #: ")
+_input = input("Option #: ")
 flag = False
 try:
-	input = int(input) - 1
+	_input = int(_input) - 1
 except ValueError:
 	flag = True
-while flag is True or input < 0 or input >= len(map):
-	print "\nInvalid option."
-	input = raw_input("Try again: ")
+while flag is True or _input < 0 or _input >= len(map):
+	print("\nInvalid option.")
+	_input = input("Try again: ")
 	try:
-		input = int(input) - 1
+		_input = int(_input) - 1
 		flag = False
 	except ValueError:
 		flag = True
-print "\n"
-print separator_line
-print map[input].name + " Solver:\n"
-constants = cls(input)
+print("\n")
+print(separator_line)
+print(map[_input].name + " Solver:\n")
+constants = cls(_input)
 
-for i in range(0, len(map[input].equations)):
+for i in range(0, len(map[_input].equations)):
 	j = constants.equations[i]
 	constants.equations[i][0] = j[0].lower()
 	temp = re.findall("[a-z]", constants.equations[i][0])
@@ -280,7 +282,7 @@ for j,i in enumerate(constants.variables):
 	question = i[1]
 	i = i[0]
 	while flag is False:
-		variables[i] = raw_input(question + ": ").replace("-","~").lower()
+		variables[i] = input(question + ": ").replace("-","~").lower()
 		if variables[i] == "":
 			variables[i] = False
 			flag = True
@@ -344,11 +346,11 @@ for j,i in enumerate(constants.variables):
 					conversion_coeffs.append(1)
 
 temp = {}
-for x,y in conversions.iteritems():
+for x,y in conversions.items():
 	temp[y[0]] = y[0]
 for i in units:
 	temp[conversions[i][0]] = i
-for i in variables.iteritems():
+for i in variables.items():
 	if i[1] is False:
 		j = 0
 		for z,x in enumerate(constants.variables):
@@ -380,7 +382,7 @@ for i in variables.iteritems():
 		conversion_coeffs[j] = conversion
 		constants.variables[j][2] = default_unit
 
-print "\n--------------------------------------------------------------------------"
+print("\n--------------------------------------------------------------------------")
 
 progress = 1
 count = 1
@@ -390,28 +392,27 @@ while progress != 0:
 	for i,j in enumerate(eqs):
 		if variables[j[0]] is False:
 			expression = eval(j[2], variables)
-			print "Solved: ", expression
 			if variables[j[0]] is not False and expression is not False and math.fabs(float(expression.replace("~","-")) - float(variables[j[0]].replace("~","-"))) > 0.2:
 				impossible = True
 				progress = 0
 				break
 			if expression is not False:
 				progress += 1
-				print str(count) + ".) Calculate ", j[0], " to be ", expression, " with the expression ", j[1]
+				print(str(count) + ".) Calculate ", j[0], " to be ", expression, " with the expression ", j[1])
 				count += 1
 				variables[j[0]] = expression
 				del eqs[i]
 				break
 
-print "--------------------------------------------------------------------------\n"
+print("--------------------------------------------------------------------------\n")
 
 if ignore_units is True:
-	print "Warning: Default units were used.\n"
+	print("Warning: Default units were used.\n")
 
 if impossible is True or (variables["t"] is False or variables["t"][0] == "~"):
-	print "This is impossible."
+	print("This is impossible.")
 else:
 	for i,n in enumerate(constants.variables):
-		print n[1] + ": " + ("{:.5f}".format(float(variables[n[0]].replace("~","-")) / conversion_coeffs[i]) if variables[n[0]] is not False else "N/A") + " " + n[2]
+		print(n[1] + ": " + ("{:.5f}".format(float(variables[n[0]].replace("~","-")) / conversion_coeffs[i]) if variables[n[0]] is not False else "N/A") + " " + n[2])
 
-print "\n"
+print("\n")
