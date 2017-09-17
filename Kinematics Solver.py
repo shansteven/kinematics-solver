@@ -49,6 +49,7 @@ conversions = {
 	"sec": ("s", 1.0),
 	"s": ("s", 1.0),
 	"second": ("s", 1.0),
+	"seconds": ("s", 1.0),
 	"min": ("s", 60),
 	"hr": ("s", 3600),
 }
@@ -398,7 +399,7 @@ while progress != 0:
 				break
 			if expression is not False:
 				progress += 1
-				print(str(count) + ".) Calculate ", j[0], " to be ", expression, " with the expression ", j[1])
+				print(str(count) + ".) Calculate ", j[0], " to be ", expression, " with the expression ", j[2])
 				count += 1
 				variables[j[0]] = expression
 				del eqs[i]
