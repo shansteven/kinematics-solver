@@ -1,4 +1,7 @@
 # kinematics-solver
+
+Part of New Providence High School AP Physics C final project.
+
 Program to automatically solve a kinematics problem using a known system of equations. Given any of the three following quantities, the program can solve for the remaining two quantities. The program also converts between units.
 
 <table>
