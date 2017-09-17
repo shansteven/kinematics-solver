@@ -6,7 +6,7 @@ Program to automatically solve a kinematics problem using a known system of equa
 
 Example:
 
-<img src="https://github.com/shansteven/kinematics-solver/blob/master/screenshot.png">
+<img src="https://github.com/shansteven/kinematics-solver/blob/master/example.png">
 
 <table>
   <tr>
