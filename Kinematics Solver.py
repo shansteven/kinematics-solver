@@ -2,6 +2,9 @@ import math
 import re
 import os
 
+# Solves a simple physics kinematics problem
+# List of valid units include mm, m, cm, in, ft, yd, mi, sec, s, min, and hr
+
 class kinematics:
 	name = "Kinematics"
 	variables = [
@@ -45,6 +48,7 @@ conversions = {
 	"mi": ("mm", 1609000.0),
 	"sec": ("s", 1.0),
 	"s": ("s", 1.0),
+	"second": ("s", 1.0),
 	"min": ("s", 60),
 	"hr": ("s", 3600),
 }
@@ -97,9 +101,9 @@ def guess_value (left, right, var, min, max, q, delta, derivative):
 	if typeof(right) == "string":
 		right = eval_expression(right, variables)
 
-def eval (j, q):
+def eval (_equation, _variables):
 	global variables
-	variables_list = re.findall("[a-z]", j)
+	variables_list = re.findall("[a-z]", _equation)
 	temp = []
 	for x in variables_list:
 		if x not in temp:
@@ -108,12 +112,12 @@ def eval (j, q):
 	remainder = len(variables_list)
 	variables_found = []
 	for x in variables_list:
-		if q[x] is not False:
+		if _variables[x] is not False:
 			remainder -= 1
 			variables_found.append(x)
 
 	if remainder == 0:
-		return eval_expression(j, q)
+		return eval_expression(_equation, _variables)
 
 	return False
 
