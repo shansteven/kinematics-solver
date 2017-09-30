@@ -2,7 +2,9 @@
 
 Part of New Providence High School AP Physics C final project.
 
-Program to automatically solve a kinematics problem using a known system of equations. Given any of the three following quantities, the program can solve for the remaining two quantities. The program also converts between units.
+Program to automatically solve a kinematics problem using a known system of equations. Given any of the three following quantities, the program can solve for the remaining two quantities. The program also converts between units and lists the steps to solve the system.
+
+**Designed to be run with Python 3**
 
 Example:
 
