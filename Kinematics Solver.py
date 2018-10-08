@@ -277,8 +277,8 @@ try:
 except ValueError:
     flag = True
 while flag is True or _input < 0 or _input >= len(map):
-    print("\nInvalid option.")
-    _input = input("Try again: ")
+    print("\nInvalid Option.")
+    _input = input("Try Again: ")
     try:
         _input = int(_input) - 1
         flag = False
@@ -400,6 +400,7 @@ for j, i in enumerate(constants.variables):
                 else:
                     conversion_coeffs.append(1)
 
+
 temp = {}
 for x, y in conversions.items():
     temp[y[0]] = y[0]
@@ -489,5 +490,4 @@ else:
                                conversion_coeffs[i]) if variables[n[0]] is not False else "N/A") +
               " " +
               n[2])
-
 print("\n")
