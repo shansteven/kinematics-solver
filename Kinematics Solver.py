@@ -252,23 +252,23 @@ def eval_expression(equation, variables, sqrt=False):
 variables = {}
 os.system('clear')
 
-separator_line = "<=========8 8=========>"
+separator_line = "#######################"
 print(separator_line)
-print("|       Options       |")
-print("<=========8 8=========>")
+print("#       Options       #")
+print("#######################")
 # print("# 1.) Kinematics      #"
 for i in range(0, len(map)):
     map_label = "{:.0f}".format(i + 1) + ".) " + map[i].name
     map_label_len = len(map_label)
     if map_label_len > len(separator_line) + 4:
         map_label = map_label[0:(len(separator_line) - 4)]
-    print("| " +
+    print("# " +
           map_label +
           "".join([" " for x in range(0, len(separator_line) -
                                       4 -
                                       map_label_len)]) +
-          " |")
-print("<=========8 8=========>\n")
+          " #")
+print("#######################\n")
 
 _input = input("Option #: ")
 flag = False
@@ -445,7 +445,7 @@ for i in variables.items():
         conversion_coeffs[j] = conversion
         constants.variables[j][2] = default_unit
 
-print("\n8========================================================================>")
+print("\n--------------------------------------------------------------------------")
 
 progress = 1
 count = 1
@@ -475,7 +475,7 @@ while progress != 0:
                 del eqs[i]
                 break
 
-print("<========================================================================8\n")
+print("--------------------------------------------------------------------------\n")
 
 if ignore_units is True:
     print("Warning: Default units were used.\n")
