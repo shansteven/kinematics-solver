@@ -5,7 +5,8 @@ import os
 # Solves a simple physics kinematics problem
 # List of valid units include mm, m, cm, in, ft, yd, mi, sec, s, min, and hr
 
-
+#Lists out the variables and derived equations
+#to solve for each of them
 class kinematics:
     name = "Kinematics"
     variables = [
@@ -39,7 +40,8 @@ class kinematics:
     # 	["f^2=v^2+2*a*x"]
     # ]
 
-
+#This list all of the unit conversions for different 
+#units
 conversions = {
     "mm": ("mm", 1.0),
     "m": ("mm", 1000.0),
@@ -55,7 +57,8 @@ conversions = {
     "min": ("s", 60),
     "hr": ("s", 3600),
 }
-
+#Puts the whole kinematics class into a map to track variables and 
+#derived equations
 map = [kinematics]
 
 
@@ -68,10 +71,12 @@ class cls():
 def find_nums(equation, variables, i):
     if i == 0:
         return False
+    #regular expressions for search later on
     preg = re.compile("^[a-z]$")
     num_preg = re.compile("^[0-9\.~]$")
     x = [0, 0]
     x1 = 0
+    #Finds the letters (a-z) in the equation[i - 1]
     if preg.match(equation[i - 1]):
         x1 = float(variables[equation[i - 1]].replace("~", "-"))
         x[0] = i - 1
@@ -242,6 +247,7 @@ def eval_expression(equation, variables, sqrt=False):
 
     return result
 
+#Program Starts Here############################################################
 
 variables = {}
 os.system('clear')
@@ -271,8 +277,8 @@ try:
 except ValueError:
     flag = True
 while flag is True or _input < 0 or _input >= len(map):
-    print("\nInvalid option.")
-    _input = input("Try again: ")
+    print("\nInvalid Option.")
+    _input = input("Try Again: ")
     try:
         _input = int(_input) - 1
         flag = False
@@ -394,6 +400,7 @@ for j, i in enumerate(constants.variables):
                 else:
                     conversion_coeffs.append(1)
 
+
 temp = {}
 for x, y in conversions.items():
     temp[y[0]] = y[0]
@@ -483,5 +490,4 @@ else:
                                conversion_coeffs[i]) if variables[n[0]] is not False else "N/A") +
               " " +
               n[2])
-
 print("\n")
