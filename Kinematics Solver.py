@@ -264,10 +264,8 @@ for i in range(0, len(map)):
         map_label = map_label[0:(len(separator_line) - 4)]
     print("| " +
           map_label +
-          "".join([" " for x in range(0, len(separator_line) -
-                                      4 -
-                                      map_label_len)]) +
-          " |")
+          "".join([" " for x in range(0, len(separator_line) - 4 - map_label_len)]) + " |")
+
 print("<=========8 8=========>\n")
 
 _input = input("Option #: ")
@@ -304,6 +302,7 @@ eqs = constants.equations
 ignore_units = False
 conversion_coeffs = []
 units = []
+
 
 for j, i in enumerate(constants.variables):
     flag = False
@@ -400,7 +399,6 @@ for j, i in enumerate(constants.variables):
                 else:
                     conversion_coeffs.append(1)
 
-
 temp = {}
 for x, y in conversions.items():
     temp[y[0]] = y[0]
@@ -491,3 +489,4 @@ else:
               " " +
               n[2])
 print("\n")
+
