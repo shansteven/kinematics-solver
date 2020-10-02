@@ -255,7 +255,7 @@ os.system('clear')
 separator_line = "#######################"
 print(separator_line)
 print("#       Options       #")
-print("#######################")
+print(separator_line)
 # print("# 1.) Kinematics      #"
 for i in range(0, len(map)):
     map_label = "{:.0f}".format(i + 1) + ".) " + map[i].name
@@ -268,7 +268,7 @@ for i in range(0, len(map)):
                                       4 -
                                       map_label_len)]) +
           " #")
-print("#######################\n")
+print(separator_line,"\n")
 
 _input = input("Option #: ")
 flag = False
